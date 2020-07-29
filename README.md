@@ -8,10 +8,12 @@ You should install the following plugins.
 
 
 ```vim
-" This is required for completion
-Plug 'neovim/nvim-lsp'
+" Obviously install this plugin...
+Plug 'tjdevries/nlua.nvim'
 
-" This makes completion really nice with builtin lsp
+" If you want to use built-in LSP (requires Neovim HEAD)
+"   Currently only supported LSP, but others could work in future if people send PRs :)
+Plug 'neovim/nvim-lsp'
 Plug 'nvim-lua/completion.nvim'
 
 " This is required for syntax highlighting
