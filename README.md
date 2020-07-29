@@ -21,7 +21,9 @@ Plug 'euclidianAce/BetterLua.vim'
 Plug 'tjdevries/manillua.nvim'
 ```
 
+# A color
 ## To Check Out
+### Another color
 
 https://github.com/bfredl/nvim-luadev
 
@@ -49,4 +51,6 @@ https://github.com/bfredl/nvim-luadev
 - [ ] Add some "switch to test file" or other kind of thing
     - Could use projections, could use alternate.vim, ...?
 - [ ] Set up for lua-formatter, cause that's really nice.
-    - Check if sumneko can do lua formatting...
+    - [x] Check if sumneko can do lua formatting...
+        - Not currently supported as far as I can see
+    - [ ] Add a "hack" for tempfile (opt-in) that formats the whole file, but we just replace the stuff we want to replace correctly. Could probably work... 90%ish time? We'd have to see.
