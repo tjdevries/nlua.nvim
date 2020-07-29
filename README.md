@@ -21,13 +21,14 @@ Plug 'euclidianAce/BetterLua.vim'
 Plug 'tjdevries/manillua.nvim'
 ```
 
-# A color
-## To Check Out
-### Another color
+## Example Completions
 
-https://github.com/bfredl/nvim-luadev
+![ExampleCompletions](./media/example_completions.png)
+
 
 ## TODO:
+
+https://github.com/bfredl/nvim-luadev
 
 - [x] `gf` should work with `require` and other items
 - [x] Set `path` correctly for lua.
