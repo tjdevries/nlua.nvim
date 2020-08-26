@@ -20,6 +20,9 @@ M.get_lua_snippets = function()
     -- TODO: It would be cool to do a more complicated if/elseif/else setup... seems hard
     ["if"] = indent "if $1 then\n  $0\nend",
 
+    -- Neovim specific.
+    cmd = "vim.cmd [[$0]]",
+
     -- Busted helpers
     describe = indent "describe('$1', function()\n  $0\nend)",
     it       = indent "it('$1', function()\n  $0\nend)",
