@@ -1,4 +1,4 @@
-# lua.nvim
+# nlua.nvim
 
 Lua Development for Neovim
 
