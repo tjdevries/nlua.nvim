@@ -1,4 +1,4 @@
-# lua.nvim
+# nlua.nvim
 
 Lua Development for Neovim
 
@@ -19,7 +19,7 @@ Plug 'nvim-lua/completion.nvim'
 " This is required for syntax highlighting
 Plug 'euclidianAce/BetterLua.vim'
 
-" TODO:
+" TODO: Making your Lua Folds as tidy as a nice Manilla Folder 
 Plug 'tjdevries/manillua.nvim'
 ```
 
