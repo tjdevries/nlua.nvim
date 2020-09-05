@@ -2,24 +2,24 @@
 
 Lua Development for Neovim
 
-## Required Plugins
-
-You should install the following plugins.
-
+## Installaiton Guide
 
 ```vim
-" Obviously install this plugin...
+" Install this plugin.
 Plug 'tjdevries/nlua.nvim'
 
-" If you want to use built-in LSP (requires Neovim HEAD)
+" (OPTIONAL): If you want to use built-in LSP (requires Neovim HEAD)
 "   Currently only supported LSP, but others could work in future if people send PRs :)
 Plug 'neovim/nvim-lsp'
+
+" (OPTIONAL): This is recommended to get better auto-completion UX experience for builtin LSP.
 Plug 'nvim-lua/completion.nvim'
 
-" This is required for syntax highlighting
+" (OPTIONAL): This is a suggested plugin to get better Lua syntax highlighting
+"   but it's not currelyt required
 Plug 'euclidianAce/BetterLua.vim'
 
-" TODO: Making your Lua Folds as tidy as a nice Manilla Folder 
+" (OPTIONAL): If you wish to have fancy lua folds, you can check this out.
 Plug 'tjdevries/manillua.nvim'
 ```
 
@@ -31,6 +31,8 @@ Plug 'tjdevries/manillua.nvim'
 ## TODO:
 
 https://github.com/bfredl/nvim-luadev
+
+## Status:
 
 - [x] `gf` should work with `require` and other items
 - [x] Set `path` correctly for lua.
@@ -57,3 +59,4 @@ https://github.com/bfredl/nvim-luadev
     - [x] Check if sumneko can do lua formatting...
         - Not currently supported as far as I can see
     - [ ] Add a "hack" for tempfile (opt-in) that formats the whole file, but we just replace the stuff we want to replace correctly. Could probably work... 90%ish time? We'd have to see.
+- [ ] Include nvim-treesitter + nlua

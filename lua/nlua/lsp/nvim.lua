@@ -35,6 +35,12 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
           path = vim.split(package.path, ';'),
           -- path = {package.path},
         },
+
+        completion = {
+          -- You should use real snippets
+          keywordSnippet = "Disable",
+        },
+
         diagnostics = {
           enable = true,
           globals = vim.list_extend({
