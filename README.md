@@ -32,6 +32,7 @@ Plug 'tjdevries/manillua.nvim'
 local custom_nvim_lspconfig_attach = function(...) end
 
 -- To get builtin LSP running, do something like:
+-- NOTE: This replaces the calls where you would have before done `require('nvim_lsp').sumneko_lua.setup()`
 require('nlua.lsp.nvim').setup(require('nvim_lsp'), {
   on_attach = custom_nvim_lspconfig_attach,
 
