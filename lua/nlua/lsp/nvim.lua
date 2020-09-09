@@ -47,7 +47,7 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
               -- Neovim
               "vim",
               -- Busted
-              "describe", "it", "before_each", "after_each"
+              "describe", "it", "before_each", "after_each", "teardown", "pending"
             }, config.globals or {}
           ),
         },

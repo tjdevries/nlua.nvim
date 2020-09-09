@@ -10,7 +10,7 @@ Plug 'tjdevries/nlua.nvim'
 
 " (OPTIONAL): If you want to use built-in LSP (requires Neovim HEAD)
 "   Currently only supported LSP, but others could work in future if people send PRs :)
-Plug 'neovim/nvim-lsp'
+Plug 'neovim/nvim-lspconfig'
 
 " (OPTIONAL): This is recommended to get better auto-completion UX experience for builtin LSP.
 Plug 'nvim-lua/completion.nvim'
@@ -21,6 +21,27 @@ Plug 'euclidianAce/BetterLua.vim'
 
 " (OPTIONAL): If you wish to have fancy lua folds, you can check this out.
 Plug 'tjdevries/manillua.nvim'
+```
+
+
+## Configuration
+
+```lua
+
+-- Your custom attach function for nvim-lspconfig goes here.
+local custom_nvim_lspconfig_attach = function(...) end
+
+-- To get builtin LSP running, do something like:
+require('nlua.lsp.nvim').setup(require('nvim_lsp'), {
+  on_attach = custom_nvim_lspconfig_attach,
+
+  -- Include globals you want to tell the LSP are real :)
+  globals = {
+    -- Colorbuddy
+    "Color", "c", "Group", "g", "s",
+  }
+})
+
 ```
 
 ## Example Completions
