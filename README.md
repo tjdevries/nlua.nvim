@@ -2,7 +2,7 @@
 
 Lua Development for Neovim
 
-## Installaiton Guide
+## Installation Guide
 
 ```vim
 " Install this plugin.
