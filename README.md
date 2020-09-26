@@ -13,7 +13,7 @@ Plug 'tjdevries/nlua.nvim'
 Plug 'neovim/nvim-lspconfig'
 
 " (OPTIONAL): This is recommended to get better auto-completion UX experience for builtin LSP.
-Plug 'nvim-lua/completion.nvim'
+Plug 'nvim-lua/completion-nvim'
 
 " (OPTIONAL): This is a suggested plugin to get better Lua syntax highlighting
 "   but it's not currelyt required
