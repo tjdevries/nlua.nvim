@@ -33,6 +33,7 @@ return function()
   -- Setup `gf` and include-style options.
   vim.bo.include = [[\v<((do|load)file|require)[^''"]*[''"]\zs[^''"]+]]
   vim.bo.includeexpr = 'v:lua.nlua.include_expr(v:fname)'
+  vim.bo.comments = ':---,:--'
 
   -- TODO: Find a lua formatter that could actually support this.
   --        As well as equalprg and related.
