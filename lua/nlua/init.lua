@@ -36,7 +36,7 @@ nlua = {
       end
 
       if not ok then
-        require('nlua.lsp').hover()
+        vim.lsp.buf.hover()
       end
     end
   end,

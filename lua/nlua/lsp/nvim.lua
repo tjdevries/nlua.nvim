@@ -20,10 +20,26 @@ local sumneko_command = function()
   }
 end
 
-nlua_nvim_lsp.setup = function(nvim_lsp, config)
-  -- Sets currently active lsp
-  require('nlua.lsp').set_lsp(nlua_nvim_lsp)
+local function get_lua_runtime()
+    local result = {};
+    for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+        local lua_path = path .. "/lua/";
+        if vim.fn.isdirectory(lua_path) then
+            result[lua_path] = true
+        end
+    end
 
+    -- This loads the `lua` files from nvim into the runtime.
+    result[vim.fn.expand("$VIMRUNTIME/lua")] = true
+
+    -- TODO: Figure out how to get these to work...
+    --  Maybe we need to ship these instead of putting them in `src`?...
+    result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
+
+    return result;
+end
+
+nlua_nvim_lsp.setup = function(nvim_lsp, config)
   nvim_lsp.sumneko_lua.setup({
     -- Lua LSP configuration
     settings = {
@@ -32,7 +48,7 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
           version = "LuaJIT",
 
           -- TODO: Figure out how to get plugins here.
-          path = vim.split(package.path, ';'),
+          -- path = vim.split(package.path, ';'),
           -- path = {package.path},
         },
 
@@ -43,6 +59,9 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
 
         diagnostics = {
           enable = true,
+          disable = config.disabled_diagnostics or {
+            "trailing-space",
+          },
           globals = vim.list_extend({
               -- Neovim
               "vim",
@@ -53,15 +72,9 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
         },
 
         workspace = {
-          library = vim.list_extend({
-              -- This loads the `lua` files from nvim into the runtime.
-              [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-
-              -- TODO: Figure out how to get these to work...
-              --  Maybe we need to ship these instead of putting them in `src`?...
-              [vim.fn.expand("~/build/neovim/src/nvim/lua")] = true,
-            }, config.library or {}
-          ),
+          library = vim.list_extend(get_lua_runtime(), config.library or {}),
+          maxPreload = 1000,
+          preloadFileSize = 1000,
         },
       }
     },
