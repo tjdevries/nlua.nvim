@@ -84,7 +84,9 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
 
     cmd = sumneko_command(),
 
-    on_attach = config.on_attach
+    on_attach = config.on_attach,
+
+    callbacks = config.callbacks
   })
 end
 
