@@ -16,7 +16,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 
 " (OPTIONAL): This is a suggested plugin to get better Lua syntax highlighting
-"   but it's not currelyt required
+"   but it's not currently required
 Plug 'euclidianAce/BetterLua.vim'
 
 " (OPTIONAL): If you wish to have fancy lua folds, you can check this out.
