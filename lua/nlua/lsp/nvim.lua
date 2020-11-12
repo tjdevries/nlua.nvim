@@ -14,7 +14,7 @@ local sumneko_command = function()
     ),
     "-E",
     string.format(
-      "%s/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua",
+      "%s/nvim_lsp/sumneko_lua/lua-language-server/main.lua",
       cache_location
     ),
   }
