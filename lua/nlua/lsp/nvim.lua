@@ -8,13 +8,13 @@ local sumneko_command = function()
 
   return {
     string.format(
-      "%s/nvim_lsp/sumneko_lua/lua-language-server/bin/%s/lua-language-server",
+      "%s/lspconfig/sumneko_lua/lua-language-server/bin/%s/lua-language-server",
       cache_location,
       bin_location
     ),
     "-E",
     string.format(
-      "%s/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua",
+      "%s/nvim/lspconfig/sumneko_lua/lua-language-server/main.lua",
       cache_location
     ),
   }
@@ -83,10 +83,8 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
     filetypes = {"lua"},
 
     cmd = config.cmd or sumneko_command(),
-
     on_attach = config.on_attach,
-
-    callbacks = config.callbacks
+    handlers = config.handlers,
   })
 end
 
