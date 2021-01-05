@@ -4,6 +4,13 @@ Lua Development for Neovim
 
 ## Installation Guide
 
+BREAKING:
+
+With the removal of `LspInstall` I added something that should allow you to install sumneko lua.
+Check out the `scripts/download_sumneko.lua` file. You should be able to run this (if you have plenary installed).
+
+I will try and make this better later. Sorry if I messed up your configs with this change.
+
 ```vim
 " Install this plugin.
 Plug 'tjdevries/nlua.nvim'

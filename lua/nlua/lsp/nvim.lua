@@ -1,21 +1,26 @@
-local nlua_nvim_lsp = {}
+local cache_location = vim.fn.stdpath('cache')
+local bin_folder = jit.os
+
+local nlua_nvim_lsp = {
+  base_directory = string.format(
+    "%s/nlua/sumneko_lua/lua-language-server/",
+    cache_location
+  ),
+
+  bin_location = string.format(
+    "%s/nlua/sumneko_lua/lua-language-server/bin/%s/lua-language-server",
+    cache_location,
+    bin_folder
+  ),
+}
 
 local sumneko_command = function()
-  local cache_location = vim.fn.stdpath('cache')
-
-  -- TODO: Need to figure out where these paths are & how to detect max os... please, bug reports
-  local bin_location = jit.os
-
   return {
-    string.format(
-      "%s/lspconfig/sumneko_lua/lua-language-server/bin/%s/lua-language-server",
-      cache_location,
-      bin_location
-    ),
+    nlua_nvim_lsp.bin_location,
     "-E",
     string.format(
-      "%s/nvim/lspconfig/sumneko_lua/lua-language-server/main.lua",
-      cache_location
+      "%s/main.lua",
+      nlua_nvim_lsp.base_directory
     ),
   }
 end
@@ -40,7 +45,22 @@ local function get_lua_runtime()
 end
 
 nlua_nvim_lsp.setup = function(nvim_lsp, config)
+  local cmd = config.cmd or sumneko_command()
+  local executable = cmd[1]
+
+  if vim.fn.executable(executable) == 0 then
+    print("Could not find sumneko executable:", executable)
+    return
+  end
+
+  if vim.fn.filereadable(cmd[3]) == 0 then
+    print("Could not find resulting build files", cmd[3])
+    return
+  end
+
   nvim_lsp.sumneko_lua.setup({
+    cmd = cmd,
+
     -- Lua LSP configuration
     settings = {
       Lua = {
@@ -82,7 +102,6 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
     -- Runtime configurations
     filetypes = {"lua"},
 
-    cmd = config.cmd or sumneko_command(),
     on_attach = config.on_attach,
     handlers = config.handlers,
   })
