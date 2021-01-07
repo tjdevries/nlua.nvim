@@ -1,5 +1,15 @@
 local cache_location = vim.fn.stdpath('cache')
-local bin_folder = jit.os
+
+local system_name
+if vim.fn.has("mac") == 1 then
+  system_name = "macOS"
+elseif vim.fn.has("unix") == 1 then
+  system_name = "Linux"
+elseif vim.fn.has('win32') == 1 then
+  system_name = "Windows"
+else
+  print("Unsupported system for nlua.nvim/sumneko")
+end
 
 local nlua_nvim_lsp = {
   base_directory = string.format(
@@ -10,7 +20,7 @@ local nlua_nvim_lsp = {
   bin_location = string.format(
     "%s/nlua/sumneko_lua/lua-language-server/bin/%s/lua-language-server",
     cache_location,
-    bin_folder
+    system_name
   ),
 }
 
@@ -26,22 +36,21 @@ local sumneko_command = function()
 end
 
 local function get_lua_runtime()
-    local result = {};
-    for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-        local lua_path = path .. "/lua/";
-        if vim.fn.isdirectory(lua_path) then
-            result[lua_path] = true
-        end
-    end
+  local result = {};
+  for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+      local lua_path = path .. "/lua/";
+      if vim.fn.isdirectory(lua_path) then
+          result[lua_path] = true
+      end
+  end
 
-    -- This loads the `lua` files from nvim into the runtime.
-    result[vim.fn.expand("$VIMRUNTIME/lua")] = true
+  -- This loads the `lua` files from nvim into the runtime.
+  result[vim.fn.expand("$VIMRUNTIME/lua")] = true
 
-    -- TODO: Figure out how to get these to work...
-    --  Maybe we need to ship these instead of putting them in `src`?...
-    result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
+  -- This loads the `lsp` files into the runtime
+  result[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
 
-    return result;
+  return result;
 end
 
 nlua_nvim_lsp.setup = function(nvim_lsp, config)
@@ -50,11 +59,6 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
 
   if vim.fn.executable(executable) == 0 then
     print("Could not find sumneko executable:", executable)
-    return
-  end
-
-  if vim.fn.filereadable(cmd[3]) == 0 then
-    print("Could not find resulting build files", cmd[3])
     return
   end
 
