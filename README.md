@@ -50,7 +50,7 @@ require('nlua.lsp.nvim').setup(require('lspconfig'), {
   }
 
   -- Optional command to run the sumneko lua language server
-	-- cmd = {"lua-language-server", "-E", "~/build/lua-language-server/main.lua"}
+  -- cmd = {"lua-language-server", "-E", "~/build/lua-language-server/main.lua"}
 })
 
 ```
