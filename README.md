@@ -34,6 +34,8 @@ Plug 'tjdevries/manillua.nvim'
 ## Configuration
 
 ```lua
+-- the location of your nvim cloned repo goes here.
+repo_folder = os.getenv("HOME") .. /build
 
 -- Your custom attach function for nvim-lspconfig goes here.
 local custom_nvim_lspconfig_attach = function(...) end
