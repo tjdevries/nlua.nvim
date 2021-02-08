@@ -1,5 +1,12 @@
 local cache_location = vim.fn.stdpath('cache')
-local bin_folder = jit.os
+local bin_folder = function()
+  local sumneko_label = jit.os()
+  if sumneko_label == 'OSX' then
+    return 'macOS'
+  else
+    return sumneko_label
+  end
+end
 
 local nlua_nvim_lsp = {
   base_directory = string.format(
@@ -10,7 +17,7 @@ local nlua_nvim_lsp = {
   bin_location = string.format(
     "%s/nlua/sumneko_lua/lua-language-server/bin/%s/lua-language-server",
     cache_location,
-    bin_folder
+    bin_folder()
   ),
 }
 
