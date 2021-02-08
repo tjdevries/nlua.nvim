@@ -1,8 +1,8 @@
 local cache_location = vim.fn.stdpath('cache')
 local bin_folder = function()
-  local sumneko_label = jit.os:lower()
-  if sumneko_label == 'osx' then
-    return 'macos'
+  local sumneko_label = jit.os()
+  if sumneko_label == 'OSX' then
+    return 'macOS'
   else
     return sumneko_label
   end
