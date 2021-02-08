@@ -1,5 +1,6 @@
 local cache_location = vim.fn.stdpath('cache')
 local bin_folder = jit.os
+local build_folder = config.repo_folder or os.getenv("HOME") .. "/build/neovim"
 
 local nlua_nvim_lsp = {
   base_directory = string.format(
@@ -39,7 +40,7 @@ local function get_lua_runtime()
 
     -- TODO: Figure out how to get these to work...
     --  Maybe we need to ship these instead of putting them in `src`?...
-    result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
+    result[build_folder .. "/src/nvim/lua"] = true
 
     return result;
 end
