@@ -1,4 +1,6 @@
+local g = require('domain.global')
 local cache_location = vim.fn.stdpath('cache')
+local build_foo
 local bin_folder = function()
   local sumneko_label = jit.os
   if sumneko_label == 'OSX' then
@@ -6,6 +8,12 @@ local bin_folder = function()
   else
     return sumneko_label
   end
+end
+
+if g.is.mac then
+  build_foo = '/usr/local/share/nvim/runtime'
+else
+  build_foo = g.HOME .. 'build/neovim/src/nvim'
 end
 
 local nlua_nvim_lsp = {
@@ -46,7 +54,8 @@ local function get_lua_runtime()
 
     -- TODO: Figure out how to get these to work...
     --  Maybe we need to ship these instead of putting them in `src`?...
-    result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
+    -- result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
+    result[build_foo .. "/lua"] = true
 
     return result;
 end
