@@ -10,7 +10,7 @@ local bin_folder = function()
   end
 end
 
-if g.is.mac then
+if g.is_mac then
   build_foo = '/usr/local/share/nvim/runtime'
 else
   build_foo = g.HOME .. 'build/neovim/src/nvim'
