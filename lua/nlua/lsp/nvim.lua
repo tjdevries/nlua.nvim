@@ -13,7 +13,7 @@ end
 if g.is_mac then
   build_foo = '/usr/local/share/nvim/runtime'
 else
-  build_foo = g.HOME .. 'build/neovim/src/nvim'
+  build_foo = g.home .. 'build/neovim/src/nvim'
 end
 
 local nlua_nvim_lsp = {
