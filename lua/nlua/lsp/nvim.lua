@@ -3,7 +3,7 @@ local build_foo
 local bin_folder
 
 if vim.loop.os_uname().sysname == "Darwin" then
-  bin_foler = 'macOS'
+  bin_folder = 'macOS'
 else
   bin_folder = 'Linux'
 end
@@ -11,7 +11,7 @@ end
 -- if g.is_mac then
   -- build_foo = '/usr/local/share/nvim/runtime'
 -- else
-build_foo = os.getenv("HOME") .. 'build/neovim/src/nvim'
+build_foo = os.getenv("HOME") .. '/build/neovim/src/nvim'
 -- end
 
 local nlua_nvim_lsp = {
@@ -19,11 +19,7 @@ local nlua_nvim_lsp = {
     "%s/nlua/sumneko_lua/lua-language-server/",
     cache_location
   ),
-
-  bin_location = string.format(
-    "%s/nlua/sumneko_lua/lua-language-server/bin/%s/lua-language-server",
-    cache_location,
-    bin_folder
+  bin_location = base_directory .. "bin/" .. bin_folder .. "/lua-language-server",
   ),
 }
 
