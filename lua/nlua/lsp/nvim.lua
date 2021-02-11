@@ -1,13 +1,13 @@
 local g = require('domain.global')
 local cache_location = vim.fn.stdpath('cache')
 local build_foo
-local bin_folder = function()
-  local sumneko_label = jit.os
-  if sumneko_label == 'OSX' then
-    return 'macOS'
-  else
-    return sumneko_label
-  end
+local bin_folder
+local sumneko_label = jit.os
+
+if sumneko_label == 'OSX' then
+  bin_foler = 'macOS'
+else
+  bin_folder = sumneko_label
 end
 
 -- if g.is_mac then
