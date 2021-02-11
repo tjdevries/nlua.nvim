@@ -25,7 +25,7 @@ local nlua_nvim_lsp = {
   bin_location = string.format(
     "%s/nlua/sumneko_lua/lua-language-server/bin/%s/lua-language-server",
     cache_location,
-    bin_folder()
+    bin_folder
   ),
 }
 
@@ -84,7 +84,7 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
           version = "LuaJIT",
 
           -- TODO: Figure out how to get plugins here.
-          -- path = vim.split(package.path, ';'),
+          path = vim.split(package.path, ';'),
           -- path = {package.path},
         },
 
@@ -106,10 +106,13 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
             }, config.globals or {}
           ),
         },
+        telemetry = {
+          enable = false
+        },
 
         workspace = {
           library = vim.list_extend(get_lua_runtime(), config.library or {}),
-          maxPreload = 1000,
+          maxPreload = 2000,
           preloadFileSize = 1000,
         },
       }
