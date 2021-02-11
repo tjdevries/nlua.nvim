@@ -23,6 +23,7 @@ local nlua_nvim_lsp = {
     "%s/nlua/sumneko_lua/lua-language-server/bin/%s/lua-language-server",
     cache_location,
     bin_folder
+  ),
 }
 
 local sumneko_command = function()
