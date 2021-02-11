@@ -1,4 +1,5 @@
 local cache_location = vim.fn.stdpath('cache')
+local hizz = os.getenv("HOME")
 local build_foo
 local bin_folder
 
@@ -11,19 +12,12 @@ end
 -- if g.is_mac then
   -- build_foo = '/usr/local/share/nvim/runtime'
 -- else
-build_foo = os.getenv("HOME") .. '/build/neovim/src/nvim'
+build_foo = hizz .. '/.local/share/nvim/runtime'
 -- end
 
 local nlua_nvim_lsp = {
-  base_directory = string.format(
-    "%s/nlua/sumneko_lua/lua-language-server/",
-    cache_location
-  ),
-  bin_location = string.format(
-    "%s/nlua/sumneko_lua/lua-language-server/bin/%s/lua-language-server",
-    cache_location,
-    bin_folder
-  ),
+  base_directory = hizz .. "/gits/lua-language-server/",
+  bin_location = hizz .. "/gits/lua-language-server/bin/" .. bin_folder .. "lua-language-server"
 }
 
 local sumneko_command = function()
@@ -52,7 +46,7 @@ local function get_lua_runtime()
     -- TODO: Figure out how to get these to work...
     --  Maybe we need to ship these instead of putting them in `src`?...
     -- result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
-    result[build_foo .. "/lua"] = true
+    -- result[build_foo .. "/lua"] = true
 
     return result;
 end
