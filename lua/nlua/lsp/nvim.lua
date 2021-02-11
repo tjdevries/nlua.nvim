@@ -1,9 +1,8 @@
-local g = require('domain.global')
 local cache_location = vim.fn.stdpath('cache')
 local build_foo
 local bin_folder
 
-if g.is_mac then
+if vim.loop.os_uname().sysname == "Darwin" then
   bin_foler = 'macOS'
 else
   bin_folder = 'Linux'
@@ -12,7 +11,7 @@ end
 -- if g.is_mac then
   -- build_foo = '/usr/local/share/nvim/runtime'
 -- else
-build_foo = g.home .. 'build/neovim/src/nvim'
+build_foo = os.getenv("HOME") .. 'build/neovim/src/nvim'
 -- end
 
 local nlua_nvim_lsp = {
