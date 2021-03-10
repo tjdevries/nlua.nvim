@@ -53,7 +53,7 @@ local function build()
   }
 
   run {
-    "./3rd/luamake/luamake", "rebuild",
+    "sh", "-c", "./3rd/luamake/luamake rebuild",
     cwd = directory,
   }
 end
