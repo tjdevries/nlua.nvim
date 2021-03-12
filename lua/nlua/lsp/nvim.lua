@@ -53,11 +53,6 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
     return
   end
 
-  if vim.fn.filereadable(cmd[3]) == 0 then
-    print("Could not find resulting build files", cmd[3])
-    return
-  end
-
   nvim_lsp.sumneko_lua.setup({
     cmd = cmd,
 
