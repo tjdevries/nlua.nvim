@@ -1,6 +1,12 @@
--- OS and filesystem
 local hizz = os.getenv("HOME")
 local cache_location = vim.fn.stdpath('cache')
+
+local bin_folder
+if vim.loop.os_uname().sysname == "Darwin" then
+  bin_folder = '/macOS/bin'
+else
+  bin_folder = '/Linux/bin'
+end
 
 -- TODO: not sure how/where/when to implement this without a creating a global option. specifically, i am having
 -- a chicken or egg problem with specifying the location of the sumenko clone. the problem is
@@ -13,14 +19,6 @@ if vim.fn.filereadable(neko_repo) then
 else
   neko = cache_location .. "/nlua/sumenko_lua/lua-language-server"
 end
-
-local bin_folder
-if vim.loop.os_uname().sysname == "Darwin" then
-  bin_folder = '/macOS/bin'
-else
-  bin_folder = '/Linux/bin'
-end
-
 
 local nlua_nvim_lsp = {
   base_directory = neko,
@@ -71,10 +69,6 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
   capabilities.textDocument.completion.completionItem.snippetSupport = true
 
   local build_foo = config.nvim_repo or hizz .. '/build/neovim'
-  -- local rt_foo = config.nvim_rt or hizz .. '/.local/share/nvim/runtime'
-  -- if homebrew_install then
-  -- rt_foo = '/usr/local/share/nvim/runtime'
-
   local executable = cmd[1]
 
   if vim.fn.executable(executable) == 0 then
