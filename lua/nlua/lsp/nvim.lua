@@ -1,23 +1,30 @@
-local cache_location = vim.fn.stdpath('cache')
+-- OS and filesystem
 local hizz = os.getenv("HOME")
-local build_foo
-local bin_folder
+local cache_location = vim.fn.stdpath('cache')
 
-if vim.loop.os_uname().sysname == "Darwin" then
-  bin_folder = 'macOS'
+-- TODO: not sure how/where/when to implement this without a creating a global option. specifically, i am having
+-- a chicken or egg problem with specifying the location of the sumenko clone. the problem is
+-- completely avoided if the user specifies a proper sumenko command in their lsp config, but that
+-- kinda sorta cuts against the purpose of this plugin
+local neko_repo = hizz .. "/gits"
+local neko
+if vim.fn.filereadable(neko_repo) then
+  neko = neko_repo .. "/lua-language-server"
 else
-  bin_folder = 'Linux'
+  neko = cache_location .. "/nlua/sumenko_lua/lua-language-server"
 end
 
--- if g.is_mac then
-  -- build_foo = '/usr/local/share/nvim/runtime'
--- else
-build_foo = hizz .. '/.local/share/nvim/runtime'
--- end
+local bin_folder
+if vim.loop.os_uname().sysname == "Darwin" then
+  bin_folder = '/macOS/bin'
+else
+  bin_folder = '/Linux/bin'
+end
+
 
 local nlua_nvim_lsp = {
-  base_directory = hizz .. "/gits/lua-language-server/",
-  bin_location = hizz .. "/gits/lua-language-server/bin/" .. bin_folder .. "lua-language-server"
+  base_directory = neko,
+  bin_location = neko .. bin_folder .. "/lua-language-server"
 }
 
 local sumneko_command = function()
@@ -31,28 +38,43 @@ local sumneko_command = function()
   }
 end
 
-local function get_lua_runtime()
-    local result = {};
-    for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-        local lua_path = path .. "/lua/";
-        if vim.fn.isdirectory(lua_path) then
-            result[lua_path] = true
-        end
+-- ADDED: 1.) extra (perhaps unecessary) $VIMRUNTIME and 2.) config.nvim_repo/build_foo gets passed during setup below
+local function get_lua_runtime(foo)
+  local result = {};
+  for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+    local lua_path = path .. "/lua/";
+    if vim.fn.isdirectory(lua_path) then
+      result[lua_path] = true
     end
+  end
 
-    -- This loads the `lua` files from nvim into the runtime.
-    result[vim.fn.expand("$VIMRUNTIME/lua")] = true
+  -- This loads the `lua` files from nvim into the runtime.
+  result[vim.fn.expand("$VIMRUNTIME/lua")] = true
+  result[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
+  result[foo .. "/src/nvim/lua"] = true
 
-    -- TODO: Figure out how to get these to work...
-    --  Maybe we need to ship these instead of putting them in `src`?...
-    -- result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
-    -- result[build_foo .. "/lua"] = true
-
-    return result;
+  return result;
 end
+
+--[[ ADDED:
+1. optional config specifications:
+   - config.cmd = sumneko_command
+   - capabilities
+   - config.nvim_repo
+   - config.on_init
+2. disable telemetry
+--]]
 
 nlua_nvim_lsp.setup = function(nvim_lsp, config)
   local cmd = config.cmd or sumneko_command()
+  local capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+  local build_foo = config.nvim_repo or hizz .. '/build/neovim'
+  -- local rt_foo = config.nvim_rt or hizz .. '/.local/share/nvim/runtime'
+  -- if homebrew_install then
+  -- rt_foo = '/usr/local/share/nvim/runtime'
+
   local executable = cmd[1]
 
   if vim.fn.executable(executable) == 0 then
@@ -67,34 +89,24 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
 
   nvim_lsp.sumneko_lua.setup({
     cmd = cmd,
+    capabilities = capabilities,
 
     -- Lua LSP configuration
     settings = {
       Lua = {
         runtime = {
           version = "LuaJIT",
-
-          -- TODO: Figure out how to get plugins here.
           path = vim.split(package.path, ';'),
-          -- path = {package.path},
         },
-
-        completion = {
-          -- You should use real snippets
-          keywordSnippet = "Disable",
-        },
-
         diagnostics = {
           enable = true,
-          disable = config.disabled_diagnostics or {
-            "trailing-space",
-          },
+          disable = config.disabled_diagnostics or "trailing-space",
           globals = vim.list_extend({
-              -- Neovim
-              "vim",
-              -- Busted
-              "describe", "it", "before_each", "after_each", "teardown", "pending"
-            }, config.globals or {}
+            -- Neovim
+            "vim",
+            -- Busted
+            "describe", "it", "before_each", "after_each", "teardown", "pending"
+          }, config.globals or {}
           ),
         },
         telemetry = {
@@ -102,7 +114,7 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
         },
 
         workspace = {
-          library = vim.list_extend(get_lua_runtime(), config.library or {}),
+          library = vim.list_extend(get_lua_runtime(build_foo), config.library or {}),
           maxPreload = 2000,
           preloadFileSize = 1000,
         },
@@ -113,6 +125,7 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
     filetypes = {"lua"},
 
     on_attach = config.on_attach,
+    on_init = config.on_init,
     handlers = config.handlers,
   })
 end
