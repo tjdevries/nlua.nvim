@@ -40,11 +40,8 @@ return function(filename)
     to_search = filename
   end
 
-  local found_file = package.searchpath(to_search, g.foonv )
 
-  if not found_file then
-    found_file = package.searchpath(to_search, package.path)
-  end
+  local found_file = package.searchpath(to_search, package.path)
 
   if not found_file then
     found_file = package.searchpath(to_search, package.cpath)
