@@ -1,4 +1,5 @@
 package.loaded['nlua.include_expr'] = nil
+local g = require('domain.global')
 
 --[[
 require("asdf")
@@ -39,7 +40,11 @@ return function(filename)
     to_search = filename
   end
 
-  local found_file = package.searchpath(to_search, package.path)
+  local found_file = package.searchpath(to_search, g.foonv )
+
+  if not found_file then
+    found_file = package.searchpath(to_search, package.path)
+  end
 
   if not found_file then
     found_file = package.searchpath(to_search, package.cpath)
