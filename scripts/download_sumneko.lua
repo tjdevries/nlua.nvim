@@ -22,7 +22,7 @@ local run = function(input)
     on_stdout = vim.schedule_wrap(function(_, data)
       print(command, ":", data)
     end),
-  }:sync(10000, nil, true)
+  }:sync(25000, nil, true)
 end
 
 local function download()
@@ -48,12 +48,12 @@ end
 
 local function build()
   run {
-    "ninja", "-f", string.format("ninja/%s.ninja", string.lower(jit.os)),
-    cwd = directory .. "/3rd/luamake",
+    "ninja", "-f", string.format("compile/ninja/%s.ninja", string.lower(jit.os)),
+    cwd = directory .. "3rd/luamake",
   }
 
   run {
-    "./3rd/luamake/luamake", "rebuild",
+    directory .. "3rd/luamake/luamake", "rebuild",
     cwd = directory,
   }
 end
