@@ -50,7 +50,8 @@ end
 
 local function build()
   run {
-    "ninja", "-f", string.format("ninja/%s.ninja", string.lower(jit.os)),
+    --[[ "ninja", "-f", string.format("ninja/%s.ninja", string.lower(jit.os)), ]]
+    "./compile/install.sh",
     cwd = directory .. "/3rd/luamake",
     skip_validation = true,
   }

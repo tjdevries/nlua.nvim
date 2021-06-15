@@ -93,8 +93,8 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
 
         workspace = {
           library = vim.list_extend(get_lua_runtime(), config.library or {}),
-          maxPreload = 1000,
-          preloadFileSize = 1000,
+          maxPreload = 10000,
+          preloadFileSize = 10000,
         },
       }
     },
@@ -104,6 +104,7 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
 
     on_attach = config.on_attach,
     handlers = config.handlers,
+    capabilities = config.capabilities,
   })
 end
 
