@@ -75,6 +75,9 @@ nlua_nvim_lsp.setup = function(nvim_lsp, config)
         completion = {
           -- You should use real snippets
           keywordSnippet = "Disable",
+
+          -- I can use builtin vim for this. Please stop :)
+          showWord = "Disable",
         },
 
         diagnostics = {
