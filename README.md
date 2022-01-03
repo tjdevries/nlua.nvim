@@ -48,6 +48,9 @@ require('nlua.lsp.nvim').setup(require('lspconfig'), {
     -- Colorbuddy
     "Color", "c", "Group", "g", "s",
   }
+
+  -- Optional command to run the sumneko lua language server
+  -- cmd = {"lua-language-server", "-E", "/home/tjdevires/build/lua-language-server/main.lua"}
 })
 
 ```
